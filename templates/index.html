@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gamified Quiz Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Optional smooth fade-in */
+    .fade-in {
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+    .fade-in.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600 flex items-center justify-center px-4 py-10 relative">
+
+  <!-- Quiz Card -->
+  <div id="quizCard" class="glass rounded-3xl shadow-2xl p-10 max-w-lg w-full text-white text-center bg-white/10 backdrop-blur-lg">
+    <h1 class="text-4xl font-extrabold mb-4">🎮 Gamified Quiz Generator</h1>
+    <p class="text-lg mb-8 text-white/90">
+      Enter any topic and test your knowledge across levels. Let's make learning fun and dynamic!
+    </p>
+
+    <form id="quizForm" action="/index" method="POST" class="space-y-6">
+      <input 
+        type="text" 
+        name="topic" 
+        placeholder="e.g. Machine Learning" 
+        required 
+        class="w-full px-5 py-3 text-gray-800 rounded-xl focus:outline-none focus:ring-4 focus:ring-white placeholder:text-gray-500"
+      />
+
+      <button 
+        type="submit" 
+        id="submitBtn"
+        class="w-full bg-white hover:bg-gray-100 text-indigo-700 font-semibold py-3 rounded-xl transition-all shadow-md hover:shadow-lg"
+      >
+        🚀 Start Quiz
+      </button>
+    </form>
+  </div>
+
+  <!-- Loading Box (initially hidden) -->
+  <!-- Loading Screen Box -->
+    <div id="loadingOverlay"
+    class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-100 border border-purple-400 text-purple-900 font-semibold text-center px-6 py-8 rounded-xl shadow-xl w-80 z-50">
+
+    <!-- Exclamation Icon (styled like the image) -->
+        <div class="text-3xl mb-4">
+        <span class="font-extrabold text-purple-600">Please wait...</span>
+        </div>
+
+    <!-- Loading Message -->
+    <p id="loadingFact" class="text-lg leading-relaxed">
+        Loading...
+      </p>
+      
+    </div>
+
+
+    <script>
+        const form = document.getElementById('quizForm');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const quizCard = document.getElementById('quizCard');
+        const factElement = document.getElementById('loadingFact');
+      
+        const facts = [
+          "Did you know? Human teeth can't heal themselves!",
+          "Did you know? The Eiffel Tower can grow taller in the summer.",
+          "Did you know? Octopuses have three hearts.",
+          "Did you know? Bananas are berries, but strawberries aren't.",
+          "Did you know? The longest English word is 189,819 letters long.",
+          "Did you know? Your brain uses about 20% of your body’s energy.",
+          "Did you know? Octopuses have three hearts.",
+          "Did you know? Baby rabbits are called kits.",
+          "Did you know? Elephants are unable to jump.",
+          "Did you know? The chicken came before the egg.",
+          "Did you know? Water can boil and freeze simultaneously!"
+        ];
+      
+        function showRandomFact() {
+          const randomIndex = Math.floor(Math.random() * facts.length);
+          factElement.textContent = facts[randomIndex];
+        }
+      
+        form.addEventListener('submit', function () {
+          showRandomFact();
+          loadingOverlay.classList.remove('hidden');
+          quizCard.classList.add('hidden');
+        });
+      
+        window.addEventListener('pageshow', function () {
+          loadingOverlay.classList.add('hidden');
+          quizCard.classList.remove('hidden');
+        });
+      </script>
+      
+  
+  
+</body>
+</html>

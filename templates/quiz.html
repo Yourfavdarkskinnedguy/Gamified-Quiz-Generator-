@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz Question</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Optional smooth fade-in */
+    .fade-in {
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+    .fade-in.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-cyan-100 flex items-center justify-center min-h-screen">
+  <div id="quizCard" class="bg-white rounded-xl shadow-xl w-[380px] p-6 relative">
+
+    <!-- Score Box -->
+    <div class="absolute top-4 right-4 bg-blue-700 text-white rounded-md px-3 py-1 text-sm font-bold">
+      SCORE: {{ score }}
+    </div>
+    
+    <h1 class="text-gray-900 font-bold text-xl mb-2">LEVEL {{ level }}</h1>
+    <!-- Question Number -->
+
+
+
+  <form id="quizForm" method="POST" action="/api/quiz">
+    <input type="hidden" name="question_id" value="{{ question_id }}">
+    <!-- Question Text -->
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ question }}</h2>
+
+    <!-- Options -->
+    
+    <div class="flex flex-col space-y-3">
+      {% for option in options %}
+    <label class="block">
+      <input type="radio" name="answer" value="{{ option }}" class="hidden peer" required>
+      <div class="peer-checked:bg-blue-400 peer-checked:text-white px-4 py-2 border rounded-lg cursor-pointer hover:bg-blue-100 transition-all">
+        <span class="font-bold">{{ option }}</span>
+      </div>
+    </label>
+{% endfor %}
+    </div>
+
+    <!--for the loading screen-->
+    <div id="loadingOverlay"
+    class="hidden fade-in fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-indigo-700 font-semibold text-lg px-6 py-4 rounded-xl shadow-xl z-50">
+      <div class="text-3xl mb-4">
+        <span class="font-extrabold leading-relaxed text-center backdrop-blur-lg">{{ display_text }}</span>
+        </div>
+    
+  
+    <p class="text-lg leading-relaxed text-center">Correct anwer is {{ correctAnswer }}</p>
+  </div>
+
+    <!-- Submit Button --> 
+      <input id="submitBtn" type="submit" value="Submit" class="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-150">
+    </form>
+  </div>
+
+
+
+    
+
+    <script>
+      const form = document.getElementById('quizForm');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+    
+      form.addEventListener('submit', function () {
+        loadingOverlay.classList.remove('hidden');
+        loadingOverlay.classList.add('show');
+      });
+    
+      // Hide loading box if user navigates back
+      window.addEventListener('pageshow', function () {
+        loadingOverlay.classList.add('hidden');
+        loadingOverlay.classList.remove('show');
+      });
+    </script>
+    
+
+</body>
+</html>
