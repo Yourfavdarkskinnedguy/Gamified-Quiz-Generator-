@@ -178,8 +178,10 @@ def quiz():
     
     elif request.method== 'POST':
         pygame.mixer.init()  # Initialize the mixer module.
-        win_sound = pygame.mixer.Sound('/Users/daniel/Desktop/Gamified Quiz Generator /Gamified-Quiz-Generator-/chime-sound-7143.mp3')
-        lost_sound= pygame.mixer.Sound('/Users/daniel/Desktop/Gamified Quiz Generator /Gamified-Quiz-Generator-/buzzer-4-183895.mp3')  # Load a sound.
+        win_sound_filepath= os.path.join(os.getcwd(),'buzzer-4-183895.mp3')
+        lost_sound_filepath= os.path.join(os.getcwd(),'chime-sound-7143.mp3')
+        win_sound = pygame.mixer.Sound(win_sound_filepath)
+        lost_sound= pygame.mixer.Sound(lost_sound_filepath)
 
         start= time.time()
         answer= request.form.get('answer')
