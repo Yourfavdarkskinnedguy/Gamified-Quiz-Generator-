@@ -5,6 +5,9 @@ from supabase import create_client, Client
 from dotenv import load_dotenv
 import time
 import functools
+
+import os
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 import pygame
 
 
